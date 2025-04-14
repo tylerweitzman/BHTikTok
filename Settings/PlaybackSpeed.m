@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor systemBackgroundColor];
-    self.speeds = @[@0.5, @1.0, @1.5, @2.0];
+    self.speeds = @[@2.0, @2.5, @3.0, @3.5, @2.0, @2.5, @3.0, @3.5, @4.0, @4.5, @5.0];
     self.title = @"Select Speed";
     self.staticTable = [[UITableView alloc] initWithFrame:CGRectZero];
     self.staticTable.translatesAutoresizingMaskIntoConstraints = NO;

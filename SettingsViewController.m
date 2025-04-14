@@ -21,7 +21,7 @@
     return self;
 }
 - (void)setupAppearance {
-    self.title = @"BHTikTok++";
+    self.title = @"BHTikTok+++";
 
     if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
         HBAppearanceSettings *appearanceSettings = [[HBAppearanceSettings alloc] init];
@@ -412,6 +412,7 @@
         PSSpecifier *hideElementButton = [self newSwitchCellWithTitle:@"Show/Hide UI button" detailTitle:@"A button on the main page to remove UI elements" key:@"remove_elements_button" defaultValue:true changeAction:nil];
         PSSpecifier *progressBar = [self newSwitchCellWithTitle:@"Show progress bar" detailTitle:nil key:@"show_porgress_bar" defaultValue:true changeAction:nil];
         PSSpecifier *transparentCommnet = [self newSwitchCellWithTitle:@"Transparent Comment Panel" detailTitle:nil key:@"transparent_commnet" defaultValue:false changeAction:nil];
+        PSSpecifier *blockVideoPlayback = [self newSwitchCellWithTitle:@"Block Video Playback" detailTitle:@"Prevent videos from playing automatically" key:@"block_video_playback" defaultValue:false changeAction:nil];
         PSSpecifier *likeConfirmation = [self newSwitchCellWithTitle:@"Confirm like" detailTitle:@"Show alert when you click the like button to confirm the like" key:@"like_confirm" defaultValue:false changeAction:nil];
         PSSpecifier *likeCommentConfirmation = [self newSwitchCellWithTitle:@"Confirm comment like" detailTitle:@"Show alert when you click the like button in comment to confirm the like" key:@"like_comment_confirm" defaultValue:false changeAction:nil];
         PSSpecifier *dislikeCommentConfirmation = [self newSwitchCellWithTitle:@"Confirm comment dislike" detailTitle:@"Show alert when you click the dislike button in comment to confirm the like" key:@"dislike_comment_confirm" defaultValue:false changeAction:nil];
@@ -466,6 +467,7 @@
             stopPlay,
             progressBar,
             transparentCommnet,
+            blockVideoPlayback,
             showUsername,
             disablePullToRefresh,
             disableUnsensitive,

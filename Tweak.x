@@ -271,8 +271,8 @@ static BOOL isAuthenticationShowed = FALSE;
         TTKSettingsBaseCellPlugin *BHTikTokSettingsPluginCell = [[%c(TTKSettingsBaseCellPlugin) alloc] initWithPluginContext:self.context];
 
         AWESettingItemModel *BHTikTokSettingsItemModel = [[%c(AWESettingItemModel) alloc] initWithIdentifier:@"bhtiktok_settings"];
-        [BHTikTokSettingsItemModel setTitle:@"BHTikTok++ settings"];
-        [BHTikTokSettingsItemModel setDetail:@"BHTikTok++ settings"];
+        [BHTikTokSettingsItemModel setTitle:@"BHTikTok+++ settings"];
+        [BHTikTokSettingsItemModel setDetail:@"BHTikTok+++ settings"];
         [BHTikTokSettingsItemModel setIconImage:[UIImage systemImageNamed:@"gear"]];
         [BHTikTokSettingsItemModel setType:99];
 
@@ -756,6 +756,61 @@ static BOOL isAuthenticationShowed = FALSE;
 %end
 
 %hook AWEPlayVideoPlayerController // auto play next video and stop looping video
+- (void)initializePlayer {
+    // Deliberately cause initialization to fail
+    [self setValue:nil forKey:@"_player"];
+    [self setValue:nil forKey:@"_playerView"]; 
+    [self setValue:nil forKey:@"_container"];
+    
+    // Force invalid state
+    [self setValue:@YES forKey:@"_isPlaying"];
+    [self setValue:@YES forKey:@"_isPaused"];
+    [self setValue:@YES forKey:@"_isStopped"];
+}
+
+- (void)setUpPlayer {
+    // Corrupt player setup
+    [self setValue:nil forKey:@"_currentPlayItem"];
+    [self setValue:[NSNull null] forKey:@"_playerLayer"];
+}
+
+- (void)containerDidFullyDisplay {
+    // Break display logic
+    [self setValue:nil forKey:@"_displayLink"];
+    [self setValue:nil forKey:@"_videoGravity"];
+    [self performSelector:@selector(nonexistentMethod)];
+}
+
+- (void)viewDidLoad {
+    if ([BHIManager blockVideoPlayback]) {
+        NSLog(@"[BHTikTok] Blocking video playback");
+        return;
+    }
+
+    return %orig;
+}
+- (void)play {
+    if ([BHIManager blockVideoPlayback]) {
+        NSLog(@"[BHTikTok] Blocking video playback");
+        return;
+    }
+    %orig;
+}
+- (void)resume {
+    if ([BHIManager blockVideoPlayback]) {
+        NSLog(@"[BHTikTok] Blocking video resume");
+        return;
+    }
+    %orig;
+}
+- (void)playWithAwemeModel:(id)arg1 {
+    if ([BHIManager blockVideoPlayback]) {
+        NSLog(@"[BHTikTok] Blocking video playback with model");
+        return;
+    }
+    %orig;
+}
+
 - (void)playerWillLoopPlaying:(id)arg1 {
     if ([BHIManager autoPlay]) {
         if ([self.container.parentViewController isKindOfClass:%c(AWENewFeedTableViewController)]) {
@@ -958,6 +1013,15 @@ static BOOL isAuthenticationShowed = FALSE;
         return 500;
     }
 
+    return %orig;
+}
+%end
+%hook AWENewFeedTableViewController
+- (void)viewDidLoad {
+    if ([BHIManager blockVideoPlayback]) {
+        [[self view] removeFromSuperview];
+        return;
+    }
     return %orig;
 }
 %end

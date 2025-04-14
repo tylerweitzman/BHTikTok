@@ -116,6 +116,10 @@
 + (BOOL)appLock {
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"padlock"];
 }
++ (BOOL)blockVideoPlayback {
+    // return [[NSUserDefaults standardUserDefaults] boolForKey:@"block_video_playback"];
+    return true;
+}
 + (void)cleanCache {
     NSArray <NSURL *> *DocumentFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject] includingPropertiesForKeys:@[] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
     

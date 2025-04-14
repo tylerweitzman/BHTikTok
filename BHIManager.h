@@ -40,6 +40,7 @@
 + (BOOL)extendedBio;
 + (BOOL)extendedComment;
 + (BOOL)appLock;
++ (BOOL)blockVideoPlayback;
 + (void)showSaveVC:(id)item;
 + (void)cleanCache;
 + (BOOL)isEmpty:(NSURL *)url;
